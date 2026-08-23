@@ -56,6 +56,7 @@ Scholarly Metadata Provider
 Document Acquisition Provider
 Research Processor
 Relationship Provider
+Publishing Provider
 ```
 
 Specific integrations then implement those contracts:
@@ -85,7 +86,14 @@ Research Processor
 ├── Gemini
 ├── Local models
 └── Custom agents
+
+Publishing Provider
+├── Quarto (learning-from-data)
+├── Static site generators (Hugo, Jekyll, ...)
+└── Future integrations
 ```
+
+A **Publishing Provider** takes curated, opt-in-only content out of the graph — selected Documents, Concepts, Relationships, and synthesis, always with their provenance (documented vs. AI-suggested vs. user-authored) intact — and renders it for a public audience outside the platform. Nothing is public by default; a user explicitly marks a paper, concept, or synthesis as public before a Publishing Provider can render or publish it. The reference implementation renders notebook-shaped content via [Quarto](https://quarto.org), using the [`learning-from-data`](https://github.com/alexanderwiebe/learning-from-data) devcontainer + `_quarto.yml` conventions as the publishing vessel, deployed to Quarto Pub or GitHub Pages.
 
 Every interaction between the platform and an external system should occur through a documented plugin API.
 
@@ -1261,6 +1269,23 @@ Local/mock Research Processor
 ```
 
 If alternate implementations require core changes, revise the contract.
+
+---
+
+## Phase 10 — Public Publishing
+
+Give the platform a public-facing output path: a Publishing Provider capability contract, plus a reference implementation that renders curated, opt-in content to the web via Quarto.
+
+Delivers:
+
+```text
+Publishing Provider capability contract
+Quarto/Jupyter Publishing Provider (learning-from-data)
+Per-item public/private opt-in flag
+Provenance preserved in published output (documented vs. AI-suggested vs. user-authored)
+```
+
+Nothing is published without explicit per-item opt-in. Depends on there being synthesized content worth publishing (Phase 6 processing pipeline, Phase 8 human knowledge layer).
 
 ---
 

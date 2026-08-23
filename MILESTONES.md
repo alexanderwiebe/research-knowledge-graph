@@ -112,6 +112,23 @@ A Task should be independently accomplishable and independently testable (it has
 
 ---
 
+## M6 — Public Publishing (Quarto/Notebook Vessel)
+
+**Marketable to:** researchers who want to share curated synthesis publicly, and readers/collaborators who want to consume it without needing the platform itself.
+
+**Why this counts as a release:** every prior milestone is about building and enriching the *personal* graph; this is the first milestone where output reaches an audience outside the tool — personal synthesis becoming a public, shareable artifact.
+
+**Delivers:**
+- Publishing Provider capability contract (new, alongside the plan's other six capabilities): takes curated, opt-in-only Documents/Concepts/Relationships/synthesis out of the graph and renders publishable content, with provenance (documented vs. AI-suggested vs. user-authored) preserved in the output.
+- Quarto/Jupyter Publishing Provider reference implementation, built on [`learning-from-data`](https://github.com/alexanderwiebe/learning-from-data)'s devcontainer + `_quarto.yml` conventions: one rendered page per published paper/concept, cross-linked, deployed via Quarto Pub or GitHub Pages.
+- Per-item public/private opt-in flag — nothing is published by default; a user explicitly marks a paper, concept, or synthesis as public first.
+
+**Maps to plan sections:** Phase 10 (public publishing).
+
+**Ships when:** a user can flag a paper's synthesis as "public," run a publish command, and get a live, readable page at a public URL, with the platform's provenance distinctions (documented / AI-suggested / user-authored) visible on it.
+
+---
+
 ## Not yet milestoned
 
-The plan's "Long-Term Direction" (timeline view, additional graph views beyond citation/semantic/neighborhood/processing, deeper permissioning/sandboxing, additional metadata/library/store integrations) is intentionally left unscheduled. These become candidate M6+ milestones once M1–M5 are delivered and real usage clarifies what's actually valuable next — decomposing them now would be planning ahead of the evidence.
+The plan's "Long-Term Direction" (timeline view, additional graph views beyond citation/semantic/neighborhood/processing, deeper permissioning/sandboxing, additional metadata/library/store integrations) is intentionally left unscheduled. These become candidate M7+ milestones once M1–M6 are delivered and real usage clarifies what's actually valuable next — decomposing them now would be planning ahead of the evidence. (M6 — Public Publishing — was pulled forward as an exception because a concrete external integration, `learning-from-data`, already exists and was ready to plan against.)
