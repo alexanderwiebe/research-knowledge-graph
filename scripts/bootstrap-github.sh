@@ -65,13 +65,15 @@ fi
 git push -u origin HEAD:main
 
 echo "== Labels =="
-declare -A LABELS=(
-  ["type: epic"]="5319e7"
-  ["type: story"]="1d76db"
-  ["type: task"]="0e8a16"
+# name|color — bash 3.2 (macOS default) has no associative arrays, so use pipe-delimited entries.
+LABELS=(
+  "type: epic|5319e7"
+  "type: story|1d76db"
+  "type: task|0e8a16"
 )
-for name in "${!LABELS[@]}"; do
-  color="${LABELS[$name]}"
+for entry in "${LABELS[@]}"; do
+  name="${entry%%|*}"
+  color="${entry#*|}"
   if gh label list --repo "${REPO_SLUG}" --search "${name}" --json name --jq '.[].name' | grep -qx "${name}"; then
     echo "Label '${name}' already exists, skipping."
   else
