@@ -91,6 +91,7 @@ MILESTONES=(
   "M3 — AI-Assisted Understanding|Research Processor plugin system with summaries, concept extraction, and provenance-tracked relationship suggestions."
   "M4 — Personal Knowledge Synthesis (Human Layer + Obsidian)|UI for accepting/rejecting AI suggestions, user-authored relationships and synthesis, plus an Obsidian Knowledge Store."
   "M5 — Open Ecosystem (v1.0)|At least one alternate implementation per major capability, proving vendor independence. The first 1.0."
+  "M6 — Public Publishing (Quarto/Notebook Vessel)|Publishing Provider capability + Quarto/learning-from-data reference implementation. Ships when a user can flag synthesis public and get a live page with provenance intact."
 )
 
 existing_milestones="$(gh api "repos/${REPO_SLUG}/milestones?state=all" --jq '.[].title')"

@@ -47,6 +47,7 @@ titles=(
   "M3 — AI-Assisted Understanding"
   "M4 — Personal Knowledge Synthesis (Human Layer + Obsidian)"
   "M5 — Open Ecosystem (v1.0)"
+  "M6 — Public Publishing (Quarto/Notebook Vessel)"
 )
 
 body_for() {
@@ -129,6 +130,21 @@ EOF
 
 ### Ships when (definition of done)
 A plugin author can swap out any single capability (library, metadata, processor, or knowledge store) for an alternate implementation with zero core changes, and this has actually been demonstrated for each capability at least once.
+EOF
+    ;;
+  "M6 — Public Publishing (Quarto/Notebook Vessel)")
+    cat <<'EOF'
+**Marketable to:** researchers who want to share curated synthesis publicly, and readers/collaborators who want to consume it without needing the platform itself.
+
+**Why this counts as a release:** every prior milestone is about building and enriching the *personal* graph; this is the first milestone where output reaches an audience outside the tool — personal synthesis becoming a public, shareable artifact.
+
+### Delivers
+- [ ] Publishing Provider capability contract (new, alongside the plan's other six capabilities): takes curated, opt-in-only Documents/Concepts/Relationships/synthesis out of the graph and renders publishable content, with provenance (documented vs. AI-suggested vs. user-authored) preserved in the output.
+- [ ] Quarto/Jupyter Publishing Provider reference implementation, built on [`learning-from-data`](https://github.com/alexanderwiebe/learning-from-data)'s devcontainer + `_quarto.yml` conventions: one rendered page per published paper/concept, cross-linked, deployed via Quarto Pub or GitHub Pages.
+- [ ] Per-item public/private opt-in flag — nothing is published by default; a user explicitly marks a paper, concept, or synthesis as public first.
+
+### Ships when (definition of done)
+A user can flag a paper's synthesis as "public," run a publish command, and get a live, readable page at a public URL, with the platform's provenance distinctions (documented / AI-suggested / user-authored) visible on it.
 EOF
     ;;
   *)
