@@ -48,6 +48,8 @@ titles=(
   "M4 — Personal Knowledge Synthesis (Human Layer + Obsidian)"
   "M5 — Open Ecosystem (v1.0)"
   "M6 — Public Publishing (Quarto/Notebook Vessel)"
+  "M7 — Ambient Discovery & Briefing (Twitter → Telegram)"
+  "M8 — Ambient Relationship Discovery (Embedding-Based Vault Connections)"
 )
 
 body_for() {
@@ -145,6 +147,38 @@ EOF
 
 ### Ships when (definition of done)
 A user can flag a paper's synthesis as "public," run a publish command, and get a live, readable page at a public URL, with the platform's provenance distinctions (documented / AI-suggested / user-authored) visible on it.
+EOF
+    ;;
+  "M7 — Ambient Discovery & Briefing (Twitter → Telegram)")
+    cat <<'EOF'
+**Marketable to:** researchers who want new candidate material discovered automatically from curated social feeds and triaged into a prioritized digest, instead of manually scanning Twitter/X.
+
+**Why this counts as a release:** it's the first milestone where the platform proactively surfaces new candidate documents from outside any library the user already manages, and pushes a prioritized summary to the user rather than waiting to be opened.
+
+### Delivers
+- [ ] Discovery Source Provider capability contract (new): surfaces candidate items from a stream (Twitter list via RSSHub now; RSS/other feeds later) as candidate Documents in a `Discovered` state, without requiring a pre-existing library entry.
+- [ ] Twitter/RSSHub Discovery Source reference implementation, adapted from the existing [`ai-briefing`](https://github.com/alexanderwiebe/learning-from-data) system: feed fetch, semantic dedup (sentence-transformers cosine similarity), link enrichment (arXiv abstracts, blog previews, t.co resolution).
+- [ ] Actionability/importance classification as a Research Processor capability: four-quadrant classification (Act Now / Queue / Inform / Skip) via Claude CLI, with 7-day trend context and per-source credibility scoring, producing assertions with full provenance distinct from citation/AI-relationship assertions.
+- [ ] Notification/Digest Provider capability contract (new): pushes a personalized, private digest to an external channel on a schedule — distinct from the public/opt-in Publishing Provider (M6).
+- [ ] Telegram Notification/Digest Provider reference implementation: twice-daily scheduled briefing, interactive callbacks (re-fetch a section, view item detail, save an item into the graph).
+
+### Ships when (definition of done)
+A configured Twitter list produces new candidate documents that appear in the graph as `Discovered`, get classified by actionability/importance with visible provenance, and are delivered as a Telegram digest twice daily with working interactive save/detail actions.
+EOF
+    ;;
+  "M8 — Ambient Relationship Discovery (Embedding-Based Vault Connections)")
+    cat <<'EOF'
+**Marketable to:** researchers using the Obsidian Knowledge Store (M4) who want their notes automatically cross-linked as their vault grows, without manually drawing every connection.
+
+**Why this counts as a release:** it's the first Relationship Provider implementation that runs on a schedule over the whole vault rather than being invoked per-document — proving the Relationship Provider contract works for background, corpus-wide relationship discovery, not just per-paper AI suggestions.
+
+### Delivers
+- [ ] Embedding-based Relationship Provider reference implementation, adapted from `ai-briefing`'s `connections.py`: scans the Obsidian vault, computes note embeddings, finds semantic neighbors above a similarity threshold, and proposes relationships.
+- [ ] Automatic population of a note's `## Related` section with Obsidian `[[backlinks]]`, tagged with this provider's provenance (distinct from citation-derived or Claude-derived relationships) and a similarity/confidence score.
+- [ ] Scheduled (weekly) background run, plus a dry-run mode for preview before writing.
+
+### Ships when (definition of done)
+Running the connection agent against a real vault populates `## Related` sections with backlinks the user recognizes as genuinely related, visibly distinguishable in provenance from AI-suggested (M3) or user-authored (M4) relationships, on a recurring schedule without manual intervention.
 EOF
     ;;
   *)

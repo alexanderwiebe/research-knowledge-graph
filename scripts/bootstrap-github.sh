@@ -92,6 +92,8 @@ MILESTONES=(
   "M4 — Personal Knowledge Synthesis (Human Layer + Obsidian)|UI for accepting/rejecting AI suggestions, user-authored relationships and synthesis, plus an Obsidian Knowledge Store."
   "M5 — Open Ecosystem (v1.0)|At least one alternate implementation per major capability, proving vendor independence. The first 1.0."
   "M6 — Public Publishing (Quarto/Notebook Vessel)|Publishing Provider capability + Quarto/learning-from-data reference implementation. Ships when a user can flag synthesis public and get a live page with provenance intact."
+  "M7 — Ambient Discovery & Briefing (Twitter → Telegram)|Discovery Source Provider + actionability Research Processor + Notification/Digest Provider, adapted from ai-briefing. Ships when discovered items are classified and delivered via Telegram twice daily."
+  "M8 — Ambient Relationship Discovery (Embedding-Based Vault Connections)|Embedding-based Relationship Provider adapted from ai-briefing's connections.py. Ships when a weekly scheduled run populates Obsidian Related sections with backlinks."
 )
 
 existing_milestones="$(gh api "repos/${REPO_SLUG}/milestones?state=all" --jq '.[].title')"
