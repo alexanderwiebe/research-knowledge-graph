@@ -57,6 +57,8 @@ Document Acquisition Provider
 Research Processor
 Relationship Provider
 Publishing Provider
+Discovery Source Provider
+Notification/Digest Provider
 ```
 
 Specific integrations then implement those contracts:
@@ -91,9 +93,24 @@ Publishing Provider
 ├── Quarto (learning-from-data)
 ├── Static site generators (Hugo, Jekyll, ...)
 └── Future integrations
+
+Discovery Source Provider
+├── Twitter/X lists via RSSHub (ai-briefing)
+├── RSS/Atom feeds
+└── Future integrations
+
+Notification/Digest Provider
+├── Telegram (ai-briefing)
+├── Email
+├── Slack
+└── Future integrations
 ```
 
 A **Publishing Provider** takes curated, opt-in-only content out of the graph — selected Documents, Concepts, Relationships, and synthesis, always with their provenance (documented vs. AI-suggested vs. user-authored) intact — and renders it for a public audience outside the platform. Nothing is public by default; a user explicitly marks a paper, concept, or synthesis as public before a Publishing Provider can render or publish it. The reference implementation renders notebook-shaped content via [Quarto](https://quarto.org), using the [`learning-from-data`](https://github.com/alexanderwiebe/learning-from-data) devcontainer + `_quarto.yml` conventions as the publishing vessel, deployed to Quarto Pub or GitHub Pages.
+
+A **Discovery Source Provider** is distinct from a Research Library Connector: a connector reads a library the user already curates (Zotero, BibTeX), while a discovery source surfaces *candidate* items from a noisy external stream (a Twitter/X list, an RSS feed) that may or may not become real Documents in the graph. It answers "what's new out there worth looking at?" rather than "what's already in my library?" — candidates enter the graph in a `Discovered` processing state, deduplicated against each other, before any Research Processor or Relationship Provider touches them. The reference implementation adapts the existing [`ai-briefing`](https://github.com/alexanderwiebe/learning-from-data) Twitter-list pipeline: RSSHub feed fetch, semantic (embedding-similarity) deduplication, and link enrichment (arXiv abstracts, blog previews, t.co resolution).
+
+A **Notification/Digest Provider** pushes a personalized, private summary of graph activity to an external channel on a schedule — the inverse of a Publishing Provider (private and push-based vs. public and opt-in/pull-based). The reference implementation adapts `ai-briefing`'s Telegram bot: a twice-daily scheduled digest with interactive callbacks (re-fetch a section, view item detail, save an item into the graph).
 
 Every interaction between the platform and an external system should occur through a documented plugin API.
 
@@ -1286,6 +1303,42 @@ Provenance preserved in published output (documented vs. AI-suggested vs. user-a
 ```
 
 Nothing is published without explicit per-item opt-in. Depends on there being synthesized content worth publishing (Phase 6 processing pipeline, Phase 8 human knowledge layer).
+
+---
+
+## Phase 11 — Ambient Discovery & Briefing
+
+Give the platform a way to proactively surface new candidate material instead of only reacting to what a user's library already contains: a Discovery Source Provider capability contract, an actionability/importance Research Processor, and a Notification/Digest Provider capability contract — reference implementations adapted from the existing `ai-briefing` Twitter → Telegram system.
+
+Delivers:
+
+```text
+Discovery Source Provider capability contract
+Twitter/X-via-RSSHub Discovery Source (ai-briefing)
+Semantic dedup + link enrichment on discovered candidates
+Actionability/importance classification as a Research Processor (Claude, four-quadrant, trend + credibility context)
+Notification/Digest Provider capability contract
+Telegram Notification/Digest Provider (ai-briefing), scheduled, with interactive save/detail callbacks
+```
+
+Depends on the Research Processor plugin system (Phase 6) for classification, and the core domain model (Phase 1) for candidate documents to land in a `Discovered` state.
+
+---
+
+## Phase 12 — Ambient Relationship Discovery
+
+Prove the Relationship Provider contract for background, corpus-wide relationship discovery — not just per-paper AI suggestions — via a reference implementation adapted from `ai-briefing`'s `connections.py` vault agent.
+
+Delivers:
+
+```text
+Embedding-based Relationship Provider reference implementation
+Scheduled (weekly) vault-wide scan for semantic neighbors above a similarity threshold
+Automatic population of a note's Related section with backlinks, tagged with this provider's provenance
+Dry-run/preview mode before writing
+```
+
+Depends on the Obsidian Knowledge Store (Phase 7) and the Relationship Provider contract (Section 12).
 
 ---
 
