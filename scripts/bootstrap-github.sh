@@ -67,6 +67,7 @@ git push -u origin HEAD:main
 echo "== Labels =="
 # name|color — bash 3.2 (macOS default) has no associative arrays, so use pipe-delimited entries.
 LABELS=(
+  "type: milestone|b60205"
   "type: epic|5319e7"
   "type: story|1d76db"
   "type: task|0e8a16"
