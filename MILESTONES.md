@@ -8,13 +8,17 @@ This project tracks work in GitHub using the following structure. Everything bel
 
 | Level | Definition | GitHub representation |
 |---|---|---|
-| **Milestone** | An incremental, marketable release. | Native GitHub Milestone |
-| **Epic** | A group of related functionality. | Issue, labeled `type: epic`, assigned to a Milestone |
+| **Milestone** | An incremental, marketable release. | Native GitHub Milestone, plus a tracking issue (labeled `type: milestone`, assigned to that same Milestone, added to the Project) — see below |
+| **Epic** | A group of related functionality. | Issue, labeled `type: epic`, assigned to a Milestone, linked as a sub-issue of that Milestone's tracking issue |
 | **Story** | Something explainable to a user. | Issue, labeled `type: story`, linked as a sub-issue of its parent Epic |
 | **Task** | Something accomplishable and testable. | Issue, labeled `type: task`, linked as a sub-issue of its parent Story |
 | **Pull Request** | Implements one or more Tasks. | PR, references the Task issue(s) it closes (`Closes #123`) |
 
 Rule of containment: a Milestone contains 1+ Epics, an Epic contains 1+ Stories, a Story contains 1+ Tasks, a Task is closed by 1+ PRs.
+
+### Milestones as Project artifacts
+
+A native GitHub Milestone has no presence on a Project (v2) board and no checklist — it's invisible until issues are filed against it. So each Milestone also gets a **tracking issue** (created by `scripts/create-milestone-issues.sh`): body has a `Delivers` checklist (mirrors this doc's bullets, checked off as the corresponding Epics close) and a `Ships when` section stating the definition of done. It's labeled `type: milestone`, assigned to its own native Milestone, and added to the Project so it shows up as a real, trackable item. As Epics are filed under a Milestone, link them as sub-issues of that Milestone's tracking issue so the Project's built-in "Sub-issues progress" field rolls up automatically.
 
 A Task should be independently accomplishable and independently testable (it has a clear, verifiable "done"). A Story should be describable to a user in terms of what they can now do, not how it's built. An Epic groups Stories that all serve the same piece of related functionality. A Milestone is the point at which the accumulated Epics add up to something you'd actually tag, release, and tell someone about.
 
